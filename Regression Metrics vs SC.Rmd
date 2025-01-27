@@ -1,0 +1,386 @@
+---
+title: "Metrics vs SC regression"
+output: html_document
+date: "2023-12-19"
+creator: Melanie McMillan
+---
+
+## Background
+
+In this code we  will be creating simple linear regressions for the 6 key metrics in Fall and in Spring. There will be one chart for each metric with 6 lines representing the 6 different streams. The six key metrics are as follows: Richness EPT, Richness E less B, % E, Clinger Richness, Scraper Richness, % composed of 5 most dominant taxa.
+
+## Libraries Needed
+
+```{r}
+library(tidyverse)
+library(ggpubr) #used for stat_smooth() and stat_cor
+
+```
+
+## Loading and Preparing the Data
+
+You can also embed plots, for example:
+
+```{r}
+metrics <- read_csv("metrics.taxachange.csv")
+metrics.s <- metrics %>%
+  filter(Season == "Spring")
+metrics.f <- metrics %>%
+  filter(Season == "Fall")
+
+chem <- read_csv("chem.f21-s22.notrib.reduced.csv") 
+chem.s <- chem %>%
+  filter(season == "Spring")
+chem.f <- chem %>%
+  filter(season == "Fall") %>%
+  filter(Site != "SPC6")
+
+sc <- left_join(metrics, chem, by = c("Site","Season" = "season", "Stream", "sc.uScm"))
+sc$group <- factor(sc$Stream, levels = c("EAS (R)", "CRO (R)", "FRY (L)", "SPC (L)", "ROL (H)", "LLW (H)"))
+
+sc.s <- left_join(metrics.s, chem.s, by = c("Site","Season" = "season", "Stream", "sc.uScm"))
+sc.s$group <- factor(sc.s$Stream, levels = c("EAS (R)", "CRO (R)", "FRY (L)", "SPC (L)", "ROL (H)", "LLW (H)"))
+
+sc.f <- left_join(metrics.f, chem.f, by = c("Site","Season" = "season", "Stream", "sc.uScm"))
+sc.f$group <- factor(sc.f$Stream, levels = c("EAS (R)", "CRO (R)", "FRY (L)", "SPC (L)", "ROL (H)", "LLW (H)"))
+```
+
+## Plotting Spring
+
+```{r}
+pE.s<- sc.s %>% ggplot(aes(x=sc.uScm , y=pE))+
+  geom_point(aes(color = group, shape = group))  +
+  geom_smooth(method = "lm", linetype = 2) +
+  stat_cor(method = "spearman", label.x = 1000, show.legend = FALSE) +
+  theme_classic()+
+  scale_colour_manual(name = "Impact Level and Stream",
+                      values = c("#619CFF", "#619CFF", "#00BA38", "#00BA38","#F8766D", "#F8766D"),
+                      labels = c("R1","R2","L1", "L2","H1","H2")) +
+  scale_shape_manual(name = "Impact Level and Stream",
+                     values = c(1, 16, 0, 15, 2, 17), labels = c("R1","R2","L1", "L2","H1","H2"))+
+  xlab("SC (uS/cm)") +
+  ylab("% E") 
+pE.s
+
+richsc.s<- sc.s %>% ggplot(aes(x=sc.uScm , y=rich.SC, color = group, shape = group))+
+  geom_point()  +
+  stat_smooth(method = "lm", linetype = 2) +
+  stat_cor(method = "spearman", label.x = 1000, show.legend = FALSE) +
+  theme_classic()+
+  scale_colour_manual(name = "Impact Level and Stream",
+                      values = c("#619CFF", "#619CFF", "#00BA38", "#00BA38","#F8766D", "#F8766D")) +
+  scale_shape_manual(name = "Impact Level and Stream",
+                     values = c(1, 16, 0, 15, 2, 17))+
+  xlab("SC (uS/cm)") +
+  ylab("Scraper Richness") 
+richsc.s
+
+rich.EPT.s<- sc.s %>% ggplot(aes(x=sc.uScm , y=rich.EPT, color = group, shape = group))+
+  geom_point()  +
+  stat_smooth(method = "lm", linetype = 2) +
+  stat_cor(method = "spearman", label.x = 1000, show.legend = FALSE) +
+  theme_classic()+
+  scale_colour_manual(name = "Impact Level and Stream",
+                      values = c("#619CFF", "#619CFF", "#00BA38", "#00BA38","#F8766D", "#F8766D")) +
+  scale_shape_manual(name = "Impact Level and Stream",
+                     values = c(1, 16, 0, 15, 2, 17))+
+  xlab("SC (uS/cm)") +
+  ylab("Richness EPT") 
+rich.EPT.s
+
+richelessb.s<- sc.s %>% ggplot(aes(x=sc.uScm , y=rich.E.less.B, color = group, shape = group))+
+  geom_point()  +
+  stat_smooth(method = "lm", linetype = 2) +
+  stat_cor(method = "spearman", label.x = 1000, show.legend = FALSE) +
+  theme_classic()+
+  scale_colour_manual(name = "Impact Level and Stream",
+                      values = c("#619CFF", "#619CFF", "#00BA38", "#00BA38","#F8766D", "#F8766D")) +
+  scale_shape_manual(name = "Impact Level and Stream",
+                     values = c(1, 16, 0, 15, 2, 17))+
+  xlab("SC (uS/cm)") +
+  ylab("Richness E less B") 
+richelessb.s
+
+richcling.s<- sc.s %>% ggplot(aes(x=sc.uScm , y=rich.Cling, color = group, shape = group))+
+  geom_point()  +
+  stat_smooth(method = "lm", linetype = 2) +
+  stat_cor(method = "spearman", label.x = 1000, show.legend = FALSE) +
+  theme_classic()+
+  scale_colour_manual(name = "Impact Level and Stream",
+                      values = c("#619CFF", "#619CFF", "#00BA38", "#00BA38","#F8766D", "#F8766D")) +
+  scale_shape_manual(name = "Impact Level and Stream",
+                     values = c(1, 16, 0, 15, 2, 17))+
+  xlab("SC (uS/cm)") +
+  ylab("Clinger Richness") 
+richcling.s
+
+p5dom.s<- sc.s %>% ggplot(aes(x=sc.uScm , y=p5dom, color = group, shape = group))+
+  geom_point()  +
+  stat_smooth(method = "lm", linetype = 2) +
+  stat_cor(method = "spearman", label.y = c(85, 82, 79, 76, 73, 70), label.x= 1000, show.legend = FALSE) +
+  theme_classic()+
+  scale_colour_manual(name = "Impact Level and Stream",
+                      values = c("#619CFF", "#619CFF", "#00BA38", "#00BA38","#F8766D", "#F8766D")) +
+  scale_shape_manual(name = "Impact Level and Stream",
+                     values = c(1, 16, 0, 15, 2, 17))+
+  xlab("SC (uS/cm)") +
+  ylab("% 5 Dominant") 
+p5dom.s
+
+vsci.s<- sc.s %>% ggplot(aes(x=sc.uScm , y=vsci, color = group, shape = group))+
+  geom_point()  +
+  stat_smooth(method = "lm", linetype = 2) +
+  stat_cor(method = "spearman", label.y = c(85, 82, 79, 76, 73, 70), label.x= 1000, show.legend = FALSE) +
+  theme_classic()+
+  scale_colour_manual(name = "Impact Level and Stream",
+                      values = c("#619CFF", "#619CFF", "#00BA38", "#00BA38","#F8766D", "#F8766D")) +
+  scale_shape_manual(name = "Impact Level and Stream",
+                     values = c(1, 16, 0, 15, 2, 17))+
+  xlab("SC (uS/cm)") +
+  ylab("VSCI") 
+vsci.s
+
+corr.metrics.sc.s <- ggarrange(rich.EPT.s, richelessb.s, pE.s, richcling.s, richsc.s, p5dom.s, nrow = 3, ncol=2,  
+                  common.legend = TRUE, legend = "right")
+corr.metrics.sc.s
+```
+
+## Plotting Fall
+
+```{r}
+pE.f<- sc.f %>% ggplot(aes(x=sc.uScm , y=pE, color = group, shape = group, linetype = season))+
+  geom_point()  +
+  stat_smooth(method = "lm") +
+  stat_cor(method = "spearman", label.x = 1000, show.legend = FALSE) +
+  theme_classic()+
+  scale_colour_manual(name = "Impact Level and Stream",
+                      values = c("#619CFF", "#619CFF", "#00BA38", "#00BA38","#F8766D", "#F8766D")) +
+  scale_shape_manual(name = "Impact Level and Stream",
+                     values = c(1, 16, 0, 15, 2, 17))+
+  xlab("SC (uS/cm)") +
+  ylab("% E") 
+pE.f
+
+richsc.f<- sc.f %>% ggplot(aes(x=sc.uScm , y=rich.SC, color = group, shape = group))+
+  geom_point()  +
+  stat_smooth(method = "lm", linetype = 2) +
+  stat_cor(method = "spearman", label.x = 1000, show.legend = FALSE) +
+  theme_classic()+
+  scale_colour_manual(name = "Impact Level and Stream",
+                      values = c("#619CFF", "#619CFF", "#00BA38", "#00BA38","#F8766D", "#F8766D")) +
+  scale_shape_manual(name = "Impact Level and Stream",
+                     values = c(1, 16, 0, 15, 2, 17))+
+  xlab("SC (uS/cm)") +
+  ylab("Scraper Richness") 
+richsc.f
+
+rich.EPT.f<- sc.f %>% ggplot(aes(x=sc.uScm , y=rich.EPT, color = group, shape = group))+
+  geom_point()  +
+  stat_smooth(method = "lm", linetype = 2) +
+  stat_cor(method = "spearman", label.x = 1000, show.legend = FALSE) +
+  theme_classic()+
+  scale_colour_manual(name = "Impact Level and Stream",
+                      values = c("#619CFF", "#619CFF", "#00BA38", "#00BA38","#F8766D", "#F8766D")) +
+  scale_shape_manual(name = "Impact Level and Stream",
+                     values = c(1, 16, 0, 15, 2, 17))+
+  xlab("SC (uS/cm)") +
+  ylab("Richness EPT") 
+rich.EPT.f
+
+richelessb.f<- sc.f %>% ggplot(aes(x=sc.uScm , y=rich.E.less.B, color = group, shape = group))+
+  geom_point()  +
+  stat_smooth(method = "lm", linetype = 2) +
+  stat_cor(method = "spearman", label.x = 1000, show.legend = FALSE) +
+  theme_classic()+
+  scale_colour_manual(name = "Impact Level and Stream",
+                      values = c("#619CFF", "#619CFF", "#00BA38", "#00BA38","#F8766D", "#F8766D")) +
+  scale_shape_manual(name = "Impact Level and Stream",
+                     values = c(1, 16, 0, 15, 2, 17))+
+  xlab("SC (uS/cm)") +
+  ylab("Richness E less B") 
+richelessb.f
+
+richcling.f<- sc.f %>% ggplot(aes(x=sc.uScm , y=rich.Cling, color = group, shape = group))+
+  geom_point()  +
+  stat_smooth(method = "lm", linetype = 2) +
+  stat_cor(method = "spearman", label.x = 1000, show.legend = FALSE) +
+  theme_classic()+
+  scale_colour_manual(name = "Impact Level and Stream",
+                      values = c("#619CFF", "#619CFF", "#00BA38", "#00BA38","#F8766D", "#F8766D")) +
+  scale_shape_manual(name = "Impact Level and Stream",
+                     values = c(1, 16, 0, 15, 2, 17))+
+  xlab("SC (uS/cm)") +
+  ylab("Clinger Richness") 
+richcling.f
+
+p5dom.f<- sc.f %>% ggplot(aes(x=sc.uScm , y=p5dom, color = group, shape = group))+
+  geom_point()  +
+  stat_smooth(method = "lm", linetype = 2) +
+  stat_cor(method = "spearman", label.x = 1000, show.legend = FALSE) +
+  theme_classic()+
+  scale_colour_manual(name = "Impact Level and Stream",
+                      values = c("#619CFF", "#619CFF", "#00BA38", "#00BA38","#F8766D", "#F8766D")) +
+  scale_shape_manual(name = "Impact Level and Stream",
+                     values = c(1, 16, 0, 15, 2, 17))+
+  xlab("SC (uS/cm)") +
+  ylab("% 5 Dominant") 
+p5dom.f
+
+vsci.f<- sc.f %>% ggplot(aes(x=sc.uScm , y=vsci, color = group, shape = group))+
+  geom_point()  +
+  stat_smooth(method = "lm", linetype = 2) +
+  stat_cor(method = "spearman", label.x = 1000, show.legend = FALSE) +
+  theme_classic()+
+  scale_colour_manual(name = "Impact Level and Stream",
+                      values = c("#619CFF", "#619CFF", "#00BA38", "#00BA38","#F8766D", "#F8766D")) +
+  scale_shape_manual(name = "Impact Level and Stream",
+                     values = c(1, 16, 0, 15, 2, 17))+
+  xlab("SC (uS/cm)") +
+  ylab("VSCI") 
+vsci.f
+
+corr.metrics.sc.f <- ggarrange(rich.EPT.f, richelessb.f, pE.f, richcling.f, richsc.f, p5dom.f, vsci.f, nrow = 4, ncol=2,  
+                  common.legend = TRUE, legend = "right")
+corr.metrics.sc.f
+```
+
+
+## Plotting both seasons togehter
+
+
+```{r}
+pE<- sc %>% ggplot(aes(x=sc.uScm , y=pE, group = Season, shape = group, color = group, linetype = Season))+
+  geom_point(size = 4)  +
+  stat_smooth(method = "lm") +
+  stat_cor(method = "spearman", label.x = 750, show.legend = FALSE, size = 5) +
+  scale_colour_discrete(name = "Stream (Impact Level)") +
+   scale_colour_manual(name = "Impact Level and Stream",
+                      values = c("#619CFF", "#619CFF", "#00BA38", "#00BA38","#F8766D", "#F8766D"), labels = c("R1","R2","L1", "L2","H1","H2")) +
+  scale_shape_manual(name = "Impact Level and Stream",
+                     values = c(1, 16, 0, 15, 2, 17), labels = c("R1","R2","L1", "L2","H1","H2"))+
+  theme_classic()+
+  xlab("SC (uS/cm)") +
+  ylab("% E") +
+   theme( axis.title.x =element_text(size = 15), axis.text.x = element_text(size = 15),
+        axis.title.y =element_text(size = 15), axis.text.y  = element_text(size = 15),
+        strip.text.x = element_text(size = 15), 
+        legend.text=element_text(size=15), legend.title=element_text(size=15)) 
+pE
+
+richsc <- sc %>% ggplot(aes(x=sc.uScm , y=rich.SC,  group = Season, shape = group, color = group, linetype = Season))+
+  geom_point(size = 4)  +
+  stat_smooth(method = "lm") +
+  stat_cor(method = "spearman", label.x = 750, show.legend = FALSE, size = 5) +
+  scale_colour_discrete(name = "Stream (Impact Level)") +
+   scale_colour_manual(name = "Impact Level and Stream",
+                      values = c("#619CFF", "#619CFF", "#00BA38", "#00BA38","#F8766D", "#F8766D"), labels = c("R1","R2","L1", "L2","H1","H2")) +
+  scale_shape_manual(name = "Impact Level and Stream",
+                     values = c(1, 16, 0, 15, 2, 17), labels = c("R1","R2","L1", "L2","H1","H2"))+
+  theme_classic()+
+  xlab("SC (uS/cm)") +
+  ylab("Scraper Richness") +
+   theme( axis.title.x =element_text(size = 15), axis.text.x = element_text(size = 15),
+        axis.title.y =element_text(size = 15), axis.text.y  = element_text(size = 15),
+        strip.text.x = element_text(size = 15), 
+        legend.text=element_text(size=15), legend.title=element_text(size=15)) 
+richsc
+
+rich.EPT<- sc %>% ggplot(aes(x=sc.uScm , y=rich.EPT,  group = Season, shape = group, color = group, linetype = Season))+
+  geom_point(size = 4)  +
+  stat_smooth(method = "lm") +
+  stat_cor(method = "spearman", label.x = 750, show.legend = FALSE, size = 5) +
+  scale_colour_discrete(name = "Stream (Impact Level)") +
+   scale_colour_manual(name = "Impact Level and Stream",
+                      values = c("#619CFF", "#619CFF", "#00BA38", "#00BA38","#F8766D", "#F8766D"), labels = c("R1","R2","L1", "L2","H1","H2")) +
+  scale_shape_manual(name = "Impact Level and Stream",
+                     values = c(1, 16, 0, 15, 2, 17), labels = c("R1","R2","L1", "L2","H1","H2"))+
+  theme_classic()+
+  xlab("SC (uS/cm)") +
+  ylab("Richness EPT") +
+   theme( axis.title.x =element_text(size = 15), axis.text.x = element_text(size = 15),
+        axis.title.y =element_text(size = 15), axis.text.y  = element_text(size = 15),
+        strip.text.x = element_text(size = 15), 
+        legend.text=element_text(size=15), legend.title=element_text(size=15)) 
+rich.EPT
+
+richelessb<- sc %>% ggplot(aes(x=sc.uScm , y=rich.E.less.B,  group = Season, shape = group, color = group, linetype = Season))+
+  geom_point(size = 4)  +
+  stat_smooth(method = "lm") +
+  stat_cor(method = "spearman", label.x = 750, show.legend = FALSE, size = 5) +
+  scale_colour_discrete(name = "Stream (Impact Level)") +
+   scale_colour_manual(name = "Impact Level and Stream",
+                      values = c("#619CFF", "#619CFF", "#00BA38", "#00BA38","#F8766D", "#F8766D"), labels = c("R1","R2","L1", "L2","H1","H2")) +
+  scale_shape_manual(name = "Impact Level and Stream",
+                     values = c(1, 16, 0, 15, 2, 17), labels = c("R1","R2","L1", "L2","H1","H2"))+
+  theme_classic()+
+  xlab("SC (uS/cm)") +
+  ylab("Richness E less B") +
+   theme( axis.title.x =element_text(size = 15), axis.text.x = element_text(size = 15),
+        axis.title.y =element_text(size = 15), axis.text.y  = element_text(size = 15),
+        strip.text.x = element_text(size = 15), 
+        legend.text=element_text(size=15), legend.title=element_text(size=15)) 
+richelessb
+
+richcling<- sc %>% ggplot(aes(x=sc.uScm , y=rich.Cling,  group = Season, shape = group, color = group, linetype = Season))+
+  geom_point(size = 4)  +
+  stat_smooth(method = "lm") +
+  stat_cor(method = "spearman", label.x = 750, show.legend = FALSE, size = 5) +
+  scale_colour_discrete(name = "Stream (Impact Level)") +
+   scale_colour_manual(name = "Impact Level and Stream",
+                      values = c("#619CFF", "#619CFF", "#00BA38", "#00BA38","#F8766D", "#F8766D"), labels = c("R1","R2","L1", "L2","H1","H2")) +
+  scale_shape_manual(name = "Impact Level and Stream",
+                     values = c(1, 16, 0, 15, 2, 17), labels = c("R1","R2","L1", "L2","H1","H2"))+
+  theme_classic()+
+  xlab("SC (uS/cm)") +
+  ylab("Clinger Richness") +
+   theme( axis.title.x =element_text(size = 15), axis.text.x = element_text(size = 15),
+        axis.title.y =element_text(size = 15), axis.text.y  = element_text(size = 15),
+        strip.text.x = element_text(size = 15), 
+        legend.text=element_text(size=15), legend.title=element_text(size=15)) 
+richcling
+
+p5dom <- sc %>% ggplot(aes(x=sc.uScm , y=p5dom,  group = Season, shape = group, color = group, linetype = Season))+
+  geom_point(size = 4)  +
+  stat_smooth(method = "lm") +
+  stat_cor(method = "spearman", label.x = 750, show.legend = FALSE, size = 5) +
+  scale_colour_discrete(name = "Stream (Impact Level)") +
+   scale_colour_manual(name = "Impact Level and Stream",
+                      values = c("#619CFF", "#619CFF", "#00BA38", "#00BA38","#F8766D", "#F8766D"), labels = c("R1","R2","L1", "L2","H1","H2")) +
+  scale_shape_manual(name = "Impact Level and Stream",
+                     values = c(1, 16, 0, 15, 2, 17), labels = c("R1","R2","L1", "L2","H1","H2"))+
+  theme_classic()+
+  xlab("SC (uS/cm)") +
+  ylab("% 5 Dominant") +
+   theme( axis.title.x =element_text(size = 15), axis.text.x = element_text(size = 15),
+        axis.title.y =element_text(size = 15), axis.text.y  = element_text(size = 15),
+        strip.text.x = element_text(size = 15), 
+        legend.text=element_text(size=15), legend.title=element_text(size=15)) 
+p5dom
+
+vsci <- sc %>% ggplot(aes(x=sc.uScm , y=vsci,  group = Season, shape = group, color = group, linetype = Season))+
+  geom_point(size = 4)  +
+  stat_smooth(method = "lm") +
+  stat_cor(method = "spearman", label.x = 750, show.legend = FALSE, size = 5) +
+  scale_colour_discrete(name = "Stream (Impact Level)") +
+   scale_colour_manual(name = "Impact Level and Stream",
+                      values = c("#619CFF", "#619CFF", "#00BA38", "#00BA38","#F8766D", "#F8766D"), labels = c("R1","R2","L1", "L2","H1","H2")) +
+  scale_shape_manual(name = "Impact Level and Stream",
+                     values = c(1, 16, 0, 15, 2, 17), labels = c("R1","R2","L1", "L2","H1","H2"))+
+  theme_classic()+
+  xlab("SC (uS/cm)") +
+  ylab("VSCI") +
+   theme( axis.title.x =element_text(size = 15), axis.text.x = element_text(size = 15),
+        axis.title.y =element_text(size = 15), axis.text.y  = element_text(size = 15),
+        strip.text.x = element_text(size = 15), 
+        legend.text=element_text(size=15), legend.title=element_text(size=15)) 
+vsci 
+
+corr.metrics.sc <- ggarrange(rich.EPT, richelessb, pE, richcling, richsc, p5dom, vsci, nrow = 4, ncol=2,  
+                  common.legend = TRUE, legend = "right")
+corr.metrics.sc
+
+png("corr.metrics.sc.png", width= 800, height = 1000)
+plot(corr.metrics.sc)
+dev.off()
+
+```

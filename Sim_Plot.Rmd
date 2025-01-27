@@ -1,0 +1,170 @@
+---
+title: "Similarity_Plots"
+output: html_document
+date: "2023-12-29"
+author: Melanie McMillan
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Background
+
+In this code we  will be creating simple linear regressions for Bray-Curtis Similarity values within each stream to distance between samples and then to SC
+
+##Libraries needed
+
+```{r}
+library(tidyverse)
+library(ggpubr)
+```
+
+## Prepare data
+
+
+```{r}
+Similar <- read_csv("Similarity.taxachange.csv")
+Similar$group <- factor(Similar$Stream, levels = c("EAS (R)", "CRO (R)", "FRY (L)", "SPC (L)", "ROL (H)", "LLW (H)"))
+
+Similar.s <- read_csv("Similarity.taxachange.csv") %>%
+  filter(Season == "Spring")
+Similar.s$group <- factor(Similar.s$Stream, levels = c("EAS (R)", "CRO (R)", "FRY (L)", "SPC (L)", "ROL (H)", "LLW (H)"))
+
+Similar.f <- read_csv("Similarity.taxachange.csv") %>%
+  filter(Season == "Fall")
+Similar.f$group <- factor(Similar.f$Stream, levels = c("EAS (R)", "CRO (R)", "FRY (L)", "SPC (L)", "ROL (H)", "LLW (H)"))
+```
+
+##Create a Spring and fall Plot for Similarity vs Distance Between Samples
+
+
+```{r}
+sim.dis.s <- Similar.s %>% ggplot(aes(x=dis.simm , y=SIM.b, color = group, shape = group))+
+  geom_point()  +
+  facet_wrap("group", nrow = 3) +
+  stat_smooth(method = "lm", linetype = 2) +
+  stat_cor(method = "spearman", label.x = 0, label.y = 1) +
+ scale_colour_manual(name = "Impact Level and Stream",
+                      values = c("#619CFF", "#619CFF", "#00BA38", "#00BA38","#F8766D", "#F8766D")) +
+  scale_shape_manual(name = "Impact Level and Stream",
+                     values = c(1, 16, 0, 15, 2, 17))+
+  theme_classic()+
+  xlab("Distance Between Samples (m)") + # (uS/cm)
+  ylab("Bray-Curtis Similarity") 
+
+sim.dis.s 
+
+sim.dis.f <- Similar.f %>% ggplot(aes(x=dis.simm , y=SIM.b, color = group, shape = group))+
+  geom_point()  +
+  facet_wrap("group", nrow = 3) +
+  stat_smooth(method = "lm", linetype = 2) +
+  stat_cor(method = "spearman", label.x = 0, label.y = 1) +
+ scale_colour_manual(name = "Impact Level and Stream",
+                      values = c("#619CFF", "#619CFF", "#00BA38", "#00BA38","#F8766D", "#F8766D")) +
+  scale_shape_manual(name = "Impact Level and Stream",
+                     values = c(1, 16, 0, 15, 2, 17))+
+  theme_classic()+
+  xlab("Distance Between Samples (m)") + # (uS/cm)
+  ylab("Bray-Curtis Similarity") 
+
+sim.dis.f
+```
+##Create a Spring and fall Plot for Similarity vs Change in SC Between Samples
+
+
+```{r}
+sim.sc.s <- Similar.s %>% ggplot(aes(x=sc.delt , y=SIM.b, color = group, shape = group))+
+  geom_point()  +
+  facet_wrap("group", nrow = 3) +
+  stat_smooth(method = "lm", linetype = 2) +
+  stat_cor(method = "spearman", label.x = 0, label.y = 1) +
+ scale_colour_manual(name = "Impact Level and Stream",
+                      values = c("#619CFF", "#619CFF", "#00BA38", "#00BA38","#F8766D", "#F8766D")) +
+  scale_shape_manual(name = "Impact Level and Stream",
+                     values = c(1, 16, 0, 15, 2, 17))+
+  theme_classic()+
+  xlab("Change in SC (uS/cm) Between Samples") + 
+  ylab("Bray-Curtis Similarity") 
+
+sim.sc.s 
+
+sim.sc.f <- Similar.f %>% ggplot(aes(x=sc.delt , y=SIM.b, color = group, shape = group))+
+  geom_point()  +
+  facet_wrap("group", nrow = 3) +
+  stat_smooth(method = "lm", linetype = 2) +
+  stat_cor(method = "spearman", label.x = 0, label.y = 1) +
+ scale_colour_manual(name = "Impact Level and Stream",
+                      values = c("#619CFF", "#619CFF", "#00BA38", "#00BA38","#F8766D", "#F8766D")) +
+  scale_shape_manual(name = "Impact Level and Stream",
+                     values = c(1, 16, 0, 15, 2, 17))+
+  theme_classic()+
+  xlab("Change in SC (uS/cm) Between Samples") + 
+  ylab("Bray-Curtis Similarity") 
+
+sim.sc.f
+```
+
+## Plot Similarity versus sc and distance between samples for fall and spring together faceted by stream
+
+
+```{r}
+stream_names <- list('EAS (R)' = "R1",
+  "CRO (R)" = "R2",
+  "FRY (L)" = "L1",
+  "SPC (L)" = "L2",
+  "ROL (H)" = "H1",
+  "LLW (H)" = "H2" )
+stream_labeller <- function(variable,value){
+  return(stream_names[value])
+}
+
+sim.sc <- Similar %>% ggplot(aes(x=sc.delt , y=SIM.b, shape = group, color = group, group = Season, linetype = Season))+
+  geom_point(size = 2)  +
+  facet_wrap(. ~ group, labeller = stream_labeller) +
+  stat_smooth(method = "lm") +
+  stat_cor(method = "spearman",label.y.npc = 0.2, size = 5) +
+ scale_colour_manual(name = "Impact Level and Stream",
+                      values = c("#619CFF", "#619CFF", "#00BA38", "#00BA38","#F8766D", "#F8766D"),
+                     labels = c("R1","R2","L1", "L2","H1","H2")) +
+   scale_shape_manual(name = "Impact Level and Stream",
+                     values = c(1, 16, 0, 15, 2, 17), labels = c("R1","R2","L1", "L2","H1","H2"))+
+  theme_classic()+
+  xlab("Change in SC (uS/cm) Between Samples") + 
+  ylab("Bray-Curtis Similarity") +
+   theme( axis.title.x =element_text(size = 15), axis.text.x = element_text(size = 15),
+        axis.title.y =element_text(size = 15), axis.text.y  = element_text(size = 15),
+        strip.text.x = element_text(size = 15), 
+        legend.text=element_text(size=15), legend.title=element_text(size=15)) 
+
+sim.sc 
+
+png("sim.sc .png",  width= 700, height = 600)
+plot(sim.sc)
+dev.off()
+
+sim.dis <- Similar %>% ggplot(aes(x=dis.simm , y=SIM.b, shape = group, color = group, group = Season, linetype = Season))+
+  geom_point(size = 2)  +
+  facet_wrap(. ~ group, labeller = stream_labeller) +
+  stat_smooth(method = "lm") +
+  stat_cor(method = "spearman",label.y.npc = 0.2, size = 5) +
+  scale_shape_manual(name = "Impact Level and Stream", 
+                      values = c(1, 16, 0, 15, 2, 17), 
+                      labels = c("R1","R2","L1", "L2","H1","H2"))+
+  scale_colour_manual(name = "Impact Level and Stream",
+                      values = c("#619CFF", "#619CFF", "#00BA38", "#00BA38","#F8766D", "#F8766D"),
+                     labels = c("R1","R2","L1", "L2","H1","H2")) +
+  theme_classic()+
+  xlab("Distance Between Samples (m)") +
+  ylab("Bray-Curtis Similarity") +
+   theme( axis.title.x =element_text(size = 15), axis.text.x = element_text(size = 15),
+        axis.title.y =element_text(size = 15), axis.text.y  = element_text(size = 15),
+        strip.text.x = element_text(size = 15), 
+        legend.text=element_text(size=15), legend.title=element_text(size=15)) 
+
+sim.dis
+
+png("sim.dis.png", width= 700, height = 600)
+plot(sim.dis)
+dev.off()
+```

@@ -1,0 +1,120 @@
+---
+title: "RDA Summary Stats"
+output: html_document
+date: "2024-02-13"
+---
+
+This code will be used to examine the metrics that RDA indicated were most explanatory of community similarity
+
+## Load Libraries
+
+```{r}
+library(tidyverse)
+
+```
+
+## Read in and prepare data
+
+Below are the metrics included in the RDA that were lumpde by PCA
+
+nutrients = total nitrogen, total phosphorus, ammonia, nitrite and nitrate, and orthophosphate
+elements = 
+pebble size = D10, D16, D25, D50, D75, D84, D84-50, D90, IQR, Hsimpson (sediment diversity)
+riparian characteristics = bank stability, riparian width, vegetative protection for right and left bank each
+
+
+```{r}
+chem <- read.csv("chem.f21-s22.notrib.reduced.csv")
+chem.s <- filter(chem, season == "Spring") %>%
+  group_by(Stream)
+chem.f <- filter(chem, season == "Fall") %>%
+  group_by(Stream)
+
+hab <- read.csv("habitatmasteradj.csv") %>%
+  group_by(Stream)
+
+```
+
+## Examine Within Stream Chemistry Gradients
+
+# Chemistry metrics indicated by RDA in Spring
+
+EAS: SC and Nutrients
+CRO: nutrients and hardness
+FRY: elements
+SPC: nutrients
+ROL: NPOC
+LLW: hardness
+All: SC, hardness, NPOC, temp, DO, nutrients
+
+# Chemistry metrics indicated by RDA in Fall
+
+EAS: hardness
+CRO: NA
+FRY: temp
+SPC: NA
+ROL: hardness
+LLW: hardness
+All: SC, hardness, elements, DO, NPOC
+
+
+```{r}
+
+chem.s.range <- chem.s %>%
+  summarise(across(c("do.mgl":"so4.hco3"), ~max(.x, na.rm = TRUE)- min (.x, na.rm = TRUE)))
+          
+chem.f.range <- chem.f %>%
+  summarise(across(c("do.mgl":"so4.hco3"), ~max(.x, na.rm = TRUE)- min (.x, na.rm = TRUE)))
+
+write.csv(chem.s.range, "chem.s.range.csv")
+write.csv(chem.f.range, "chem.f.range.csv")
+
+```
+
+## Examine Within Stream Habitat Gradients
+
+Habitat metrics indicated by RDA in Spring
+
+EAs: slope and rip.
+CRO: % large cobbles
+FRY: slope
+SPC: wetted width
+ROL: LCF
+LLw: NA
+ALL: % fines, slope, peb. dim., embeddedness, wetted width, rip char
+
+Habitat metrics indicated by RDA in Fall
+
+EAs: % fines
+CRO: LCF
+FRY: %fines
+SPC: NA
+ROL: embeddedness 
+LLw: embeddedness 
+ALL: wetted width, % fines, peb. dim., slope, rip. char.
+
+```{r}
+habrange <- hab %>%
+  summarise(across(c("fines":"avg.slope"), ~max(.x, na.rm = TRUE)- min (.x, na.rm = TRUE)))
+
+write.csv(habrange, "habrange.csv")
+```
+
+
+## 
+
+
+```{r}
+
+```
+
+
+## 
+
+
+```{r}
+
+```
+
+
+

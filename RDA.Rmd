@@ -1,0 +1,177 @@
+---
+title: "RDA"
+output: html_document
+date: "2024-10-31"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(vegan)
+library(sp)
+library(sf)
+```
+
+## R Markdown
+
+Apply Hellinger transformation tocommunity data to correct for the double zero problem (77% zeros, double zero problem).Scale and center variables.
+
+
+
+Read in and prepare the data
+```{r}
+com <- read.csv("bugid.taxachange.csv")%>%
+  #filter(Season == "Fall") %>%
+  filter(Season == "Spring") %>%
+  filter(Stream == "LLW (H)") %>%
+  select(c(Acentrella:Yugus))
+com.hel <- decostand(com, method = "hellinger")
+
+chem <- read.csv("chem.pca.csv")%>%
+  #filter(Season == "Fall") %>%
+  filter(Season == "Spring") %>%
+  filter(Stream == "LLW (H)") %>%
+  select(do.mgl:elements.pca)
+chem.z <- decostand(chem, method = "standardize",  na.rm =TRUE)
+#round(apply(chem.z, 2, mean), 1)
+
+hab <- read.csv("hab.pca.csv") %>%
+  #filter(!Site %in% c("EAS9", "FRY8", "FRY9", "ROL7", "SPC6")) %>%
+  filter(Stream == "LLW (H)") %>%
+  select(-c(Stream:Site))
+hab.z <- decostand(hab, method = "standardize", na.rm =TRUE)
+
+xy <- read.csv("site_coord_notrib.csv") %>%
+ # filter(!Site %in% c("EAS9", "FRY8", "FRY9", "ROL7", "SPC6")) %>%
+  filter(Stream == "LLW (MI)") 
+```
+
+## Prepare Spatial Data
+```{r }
+
+site.loc.sp = sp::SpatialPointsDataFrame(coords = data.frame(xy$x, 
+                                                             xy$y),
+                                         data = xy,
+                                         proj4string = CRS("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs")) 
+
+site.loc.sp = spTransform(site.loc.sp, 
+                          CRS("+proj=utm +zone=17 +ellps=WGS84 +datum=WGS84 +units=m +no_defs"))
+site.loc.sp$x_utm = site.loc.sp@coords[,1] 
+site.loc.sp$y_utm = site.loc.sp@coords[,2]
+
+str(site.loc.sp)
+#plot(site.loc.sp)
+
+site.loc.sf = st_as_sf(site.loc.sp, coords = c("long", "lat"), # convert sp to sf
+                       crs = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs")
+
+site.xy = as.data.frame(site.loc.sf) # convert sf to df, needed to remove point geometry for writing to .txt
+site.xy = site.xy %>%
+  select( x_utm,
+          y_utm) 
+
+xy <- site.xy %>%
+  select(c(x_utm, y_utm))
+
+mod.pcnm <- pcnm( dist(xy) )
+vectors.pcnm <- data.frame(mod.pcnm$vectors)
+
+```
+
+# Determine Space Vectors
+```{r }
+d.space <- data.frame( vectors.pcnm)
+#combine all spatial variables, x, y, and PCNMs
+
+d.space.scaled <- data.frame( scale(d.space) ) 
+#center spatial variables on 0, and standardize
+# null model with intercept
+mod.0 <- rda( com.hel ~ 1, data = d.space.scaled)
+#plot(mod.0)
+#summary(mod.0)
+
+mod.1 <- rda(com.hel ~ ., data = d.space.scaled)
+#plot(mod.1)
+
+#stepwise selection of the best model
+mod.best <- ordiR2step(rda( com.hel ~1, data = d.space.scaled), scope = formula(mod.1),  
+                       direction = "backward",
+                       R2scope = FALSE, # can't surpass the "full" model's R2
+                       pstep = 1000,
+                       trace = FALSE)
+#anova.cca(mod.best)
+RsquareAdj(mod.best)
+
+summary(mod.best)
+
+spe.scores <- as.data.frame(scores(mod.best, display = "species"))
+site.scores <- as.data.frame(scores(mod.best, display = "sites"))
+write.csv(spe.scores, file = "spe.scores.csv")
+write.csv(site.scores, file = "site.scores.csv")
+
+S.keepers <- names( mod.best$terminfo$ordered )
+S.keepers
+```
+
+
+# Determine Chemistry Vectors
+
+```{r }
+mod.0 <-rda(com.hel ~ 1, data = chem.z)
+
+mod.1 <- rda(com.hel ~ ., data = chem.z)
+#summary(mod.1)
+
+#stepwise selection of the best model
+mod.best <- ordiR2step(mod.0, scope = mod.1, direction = "backward",R2scope = FALSE)
+#anova.cca(mod.best)
+RsquareAdj(mod.best)
+mod.best
+
+C.keepers <- names(mod.best$terminfo$ordered)
+C.keepers
+
+spe.scores <- as.data.frame(scores(mod.best, display = "species"))
+site.scores <- as.data.frame(scores(mod.best, display = "sites"))
+
+write.csv(spe.scores, file = "spe.scores.csv")
+write.csv(site.scores, file = "site.scores.csv")
+```
+# Determine Habitat Vectors
+```{r }
+mod.0 <- rda(com.hel ~ 1, data = hab.z)
+mod.1 <- rda(com.hel ~ ., data = hab.z)
+
+
+#stepwise selection of the best model
+mod.best <- ordiR2step(mod.0, scope = mod.1, direction = "backward",
+                       R2scope = FALSE, # can't surpass the "full" model's R2
+                       pstep = 1000,
+                       trace = FALSE) 
+#mod.best
+
+#anova.cca(mod.best)
+RsquareAdj(mod.best)
+
+H.keepers <- names(mod.best$terminfo$ordered)
+H.keepers
+
+spe.scores <- as.data.frame(scores(mod.best, display = "species"))
+site.scores <- as.data.frame(scores(mod.best, display = "sites"))
+
+write.csv(spe.scores, file = "spe.scores.csv")
+write.csv(site.scores, file = "site.scores.csv")
+
+```
+
+# Variation Partitioning
+```{r }
+d.C <- chem.z[,C.keepers]
+d.S <- d.space.scaled[,S.keepers]
+d.H <- hab.z[,H.keepers]
+all <- varpart(com.hel, d.C, d.S, d.H)
+all
+plot(all)
+
+```

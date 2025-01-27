@@ -1,0 +1,62 @@
+---
+title: "Bray-Curtis_Dissim"
+output: html_document
+date: "2024-10-17"
+---
+
+```{r}
+
+library(vegan)
+library(tidyverse)
+library(ggpubr)
+
+
+```
+
+## Bray- Curtis
+
+Adapted from script of Bryan Brown 2024
+Compute similarites by looping to produce independent ID variables and thus ensure that 
+We get correct correspondence between Distance and Similarity
+
+```{r}
+library(vegan)
+library(tidyverse)
+library(ggpubr)
+
+bugs <- read.csv("bugid.taxachange.csv") %>%
+  filter( Season == "Fall") 
+
+```
+
+## Loop for calculating Similarity
+
+
+```{r}
+Similar <- c()
+Stream.list <- unique(bugs$Stream)
+for(k in 1:length(Stream.list)){
+  Metricz <- bugs[bugs$Stream==Stream.list[k],]
+  Site.list <- unique(Metricz$Site)                            
+  Simile <- c()
+  for(i in 1:length(Site.list)){
+    a <- Metricz[Metricz$Site==Site.list[i],c(4:118)]
+    Site.list2 <- Site.list[(i-1):length(Site.list)]
+    for(j in 1:length(Site.list2)){
+      b <- Metricz[Metricz$Site==Site.list2[j],c(4:118)]
+      ab <- rbind(a,b)
+      sim <- vegdist(ab, method= 'bray', binary=TRUE)  # the similarity function
+      SIM <- 1-(as.numeric(sim))    # converting from default dissimilarity to similarity
+      out <- data.frame(START=Site.list[i], END=Site.list2[j], Season=Metricz$Season[Metricz$Site==Site.list[i]], Stream=Stream.list[k], SIM)
+      Simile <- rbind(Simile,out)  
+    }
+  }
+  Similar <- rbind(Similar, Simile) 
+}
+
+Similar <- Similar[Similar$SIM != 1, ]
+write.csv(Similar, file="Similarity.taxachange.csv", sep = ",")
+  
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
