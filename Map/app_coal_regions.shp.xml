@@ -1,0 +1,227 @@
+<?xml version="1.0"?>
+<!DOCTYPE metadata SYSTEM "http://www.fgdc.gov/metadata/fgdc-std-001-1998.dtd">
+<metadata>
+	<idinfo>
+		<citation>
+			<citeinfo>
+				<origin>Michael H. Trippi</origin>
+				<pubdate>2014</pubdate>
+				<geoform>vector digital data</geoform>
+				<onlink>http://pubs.usgs.gov/pp/1708/ii/downloads/coal/basin_coal_regions/app_coal_regions.zip</onlink>
+				<lworkcit>
+					<citeinfo>
+						<origin>Ruppert, Leslie F.</origin>
+						<pubdate>2014</pubdate>
+						<title>Coal and Petroleum Resources in the Appalachian Basin: Distribution, Geologic Framework, and Geochemical Character</title>
+						<geoform>document</geoform>
+						<serinfo>
+							<sername>Professional Paper</sername>
+							<issue>1708</issue>
+						</serinfo>
+						<pubinfo>
+							<pubplace>Reston, Virginia</pubplace>
+							<publish>U.S. Geological Survey</publish>
+						</pubinfo>
+						<onlink>http://dx.doi.org/10.3133/pp1708I.1</onlink>
+						<origin>Ryder, Robert T.</origin></citeinfo>
+				</lworkcit>
+				<pubinfo><publish>U.S. Geological Survey</publish><pubplace>Reston, Virginia</pubplace></pubinfo><title>app_coal_regions</title><ftname Sync="TRUE">app_coal_basins</ftname><onlink>http://pubs.usgs.gov/pp/1708/ii/downloads/coal/basin_coal_regions/app_coal_regions.kmz</onlink></citeinfo>
+		</citation>
+		<descript>
+			<abstract>This dataset represents the northern, central, and southern coal regions in the Appalachian basin of the Eastern United States.</abstract>
+			<purpose>This dataset can be used to display the northern, central, and southern coal regions in the Appalachian basin of the Eastern United States. It is available in shapefile and Zipped Keyhole Markup Language (KMZ) formats, and can be viewed using ArcGIS, Google Earth, or any software package that supports these data formats.</purpose>
+			<langdata Sync="TRUE">en</langdata></descript>
+		<timeperd>
+			<timeinfo>
+				<sngdate>
+					<caldate>2014</caldate>
+				</sngdate>
+			</timeinfo>
+			<current>publication date</current>
+		</timeperd>
+		<status>
+			<progress>Complete</progress>
+			<update>None planned</update>
+		</status>
+		<spdom>
+			<bounding>
+				<westbc Sync="TRUE">-88.098358</westbc>
+				<eastbc Sync="TRUE">-76.929794</eastbc>
+				<northbc Sync="TRUE">42.019215</northbc>
+				<southbc Sync="TRUE">32.840576</southbc>
+			</bounding>
+			<lboundng><leftbc Sync="TRUE">-88.098358</leftbc><rightbc Sync="TRUE">-76.929794</rightbc><bottombc Sync="TRUE">32.840576</bottombc><topbc Sync="TRUE">42.019215</topbc></lboundng></spdom>
+		<keywords>
+			<theme>
+				<themekt>ArcIMS Metadata Server Theme Codes Thesaurus</themekt>
+				<themekey>geoscientificInformation</themekey>
+			</theme>
+			<theme>
+				<themekt>USGS Energy Program Themes Thesaurus</themekt>
+				<themekey>Geologic Framework</themekey>
+				<themekey>USGS</themekey>
+				<themekey>U.S. Geological Survey</themekey>
+				<themekey>Energy Resources Program</themekey>
+				<themekey>Coal</themekey>
+			</theme>
+			<place>
+				<placekt>USGS</placekt>
+				<placekey>Appalachian Basin</placekey>
+				<placekey>New York</placekey><placekey>Kentucky</placekey><placekey>Pennsylvania</placekey><placekey>Ohio</placekey><placekey>Maryland</placekey><placekey>Virginia</placekey><placekey>West Virginia</placekey><placekey>Alabama</placekey><placekey>Georgia</placekey><placekey>Tennessee</placekey></place>
+		</keywords>
+		<accconst>None</accconst>
+		<useconst>None</useconst>
+		<ptcontac>
+			<cntinfo>
+				<cntaddr>
+					<addrtype>mailing address</addrtype>
+					<address>MS 956, National Center, 12201 Sunrise Valley Drive</address>
+					<city>Reston</city>
+					<state>Virginia</state>
+					<postal>20192</postal>
+					<country>United States</country>
+				</cntaddr>
+				<cntvoice>703-648-4597</cntvoice>
+				<cntemail>mtrippi@usgs.gov</cntemail>
+				<cntorgp><cntorg>U.S. Geological Survey</cntorg><cntper>Michael H. Trippi</cntper></cntorgp><cntfax>703-648-6419</cntfax><cntpos>Geologist</cntpos></cntinfo>
+		</ptcontac>
+		<native>Microsoft Windows XP Version 5.1 (Build 2600) Service Pack 2; Esri ArcCatalog 9.3.1.3000</native><natvform Sync="TRUE">Shapefile</natvform></idinfo>
+	<dataqual>
+		<logic>This dataset has not been tested for logical consistency.  Spatial relationships (topology) do not exist.</logic>
+		<complete>Completeness has not been tested for this dataset.</complete>
+		<lineage>
+			<srcinfo>
+				<srccite>
+					<citeinfo>
+						<origin>Tully, John</origin>
+						<pubdate>1996</pubdate>
+						<title>Coal Fields of the Conterminous United States</title>
+						<geoform>vector digital data</geoform>
+						<serinfo>
+							<sername>Open-File Report</sername>
+							<issue>96-92</issue>
+						</serinfo>
+						<pubinfo>
+							<pubplace>Reston, Virginia</pubplace>
+							<publish>U.S. Geological Survey</publish>
+						</pubinfo>
+						<onlink>http://pubs.usgs.gov/of/1996/of96-092/</onlink>
+					</citeinfo>
+				</srccite>
+				<typesrc>online</typesrc>
+				<srccitea>Coal Fields of Conterminous United States</srccitea>
+				<srccontr>Geometry of this dataset.</srccontr>
+				<srctime><srccurr>publication date</srccurr><timeinfo><sngdate><caldate>1996</caldate></sngdate></timeinfo></srctime></srcinfo>
+			<procstep>
+				<procdesc>Shapefile uscoal_l.shp was downloaded from the web site (http://pubs.usgs.gov/of/1996/of96-092/) and added to an ArcGIS project.</procdesc>
+				<procsv>ArcGIS 9.2</procsv><procdate>2007</procdate><srcused>Coal Fields of Conterminous United States</srcused></procstep>
+			<procstep><procdesc>Polyline features from the shapefile that formed the boundaries of the Appalachian basin were selected and joined at their endpoints to create polygon features which were then saved as a new shapefile with the name app_coal_basins.shp.  Anthracite coal basins of Pennsylvania and Virginia were not included in the shapefile.</procdesc><procsv>ArcGIS 9.2</procsv><procdate>2007</procdate></procstep><procstep><procdesc>Shapefile pr67bndg.shp representing the National Oil and Gas Assessment (NOGA) province boundary for the Appalachian basin (province 67) was added to the ArcMap project and used to crop the western and southern boundaries of app_coal_basins.shp polygons where they extended beyond the boundaries of province 67 in Kentucky, Tennessee, and Alabama.</procdesc><procsv>ArcGIS 9.2</procsv><procdate>2007</procdate><srcused>NOGA prov67</srcused></procstep><procstep><procdesc>Shapefile countyp020.shp from the National Atlas was added to the ArcMap project and several Alabama counties  (Cullman, Fayette, Franklin, Jefferson, Lamar, Lawrence, Marion, Tuscaloosa, Walker, and Winston counties) were selected and merged to form one polygon, then merged with the polygon created in process step 3.  As per R.C. Milici and J.R. Hatch's 2002 NOGA assessment of undiscovered Carboniferous coal-bed gas resources in  the Appalachian basin in 2002, the boundaries of the Appalachian basin were extended to the western edge of Pennsylvanian subcropping rocks in these counties in Alabama.</procdesc><procsv>ArcGIS 9.2</procsv><procdate>2007</procdate><srcused>NatAtlas counties</srcused><srcused>Milici and Hatch, 2004</srcused></procstep><procstep><procdesc>The largest polygon forming the main body of the Appalachian basin was split into three sections representing the northern, central, and southern Appalachian basin coal regionson the basis of a hand drawn map.  Smaller adjacent polygons were assigned to the appropriate region on the basis of proximity to one of the first three polygons described above.</procdesc><procsv>ArcGIS 9.2</procsv><procdate>2007</procdate></procstep><procstep><procdesc>Polygons belonging to the same region were grouped and merged into one record.  The final table had only three records representing northern, central, and southern Appalachian basin coal regions.</procdesc><procsv>ArcGIS 9.2</procsv><procdate>2007</procdate></procstep><procstep><procdesc>All fields except FID and Shape were deleted from the attribute table, and a new field, name, was added to the table.  The three records were labelled "Northern Appalachian basin coal region," "Central Appalachian basin coal region," and "Southern Appalachian basin coal region" in the name field.</procdesc><procsv>ArcGIS 9.2</procsv><procdate>2007</procdate></procstep><srcinfo><srccite><citeinfo><pubdate>2007</pubdate><geoform>vector digital data</geoform><pubinfo><pubplace>Denver, Colorado</pubplace><publish>U.S. Geological Survey</publish></pubinfo><onlink>http://certmapper.cr.usgs.gov/data/noga00/prov67/spatial/pr67bndg.zip</onlink><origin>U.S. Geological Survey</origin><title>pr67bndg.shp</title></citeinfo></srccite><typesrc>online</typesrc><srctime><timeinfo><sngdate><caldate>2007</caldate></sngdate></timeinfo><srccurr>publication date</srccurr></srctime><srccitea>NOGA prov67</srccitea><srccontr>Geometry of feature.</srccontr></srcinfo><srcinfo><srccite><citeinfo><origin>U.S. Geological Survey</origin><pubdate>2007</pubdate><title>countyp020.shp</title><geoform>vector digital data</geoform><pubinfo><pubplace>Denver, Colorado</pubplace><publish>U.S. Geological Survey</publish></pubinfo><onlink>http://nationalatlas.gov/atlasftp.html#countyp</onlink></citeinfo></srccite><typesrc>online</typesrc><srccitea>NatAtlas counties</srccitea><srccontr>Geometry of feature.</srccontr><srctime><timeinfo><sngdate><caldate>2007</caldate></sngdate></timeinfo><srccurr>publication date</srccurr></srctime></srcinfo><srcinfo><typesrc>online</typesrc><srccitea>Milici and Hatch, 2004</srccitea><srccontr>Geometry of feature.</srccontr><srccite><citeinfo><title>Assessment of Undiscovered Carboniferous Coal-Bed Gas Resources of the Appalachian Basin and Black Warrior Basin Provinces, 2002</title><origin>Milici, R.C.</origin><pubdate>2004</pubdate><geoform>document</geoform><serinfo><sername>Fact Sheet</sername><issue>2004-3092</issue></serinfo><pubinfo><pubplace>Reston, Virginia</pubplace><publish>U.S. Geological Survey</publish></pubinfo><onlink>http://pubs.usgs.gov/fs/2004/3092/fs2004-3092.html</onlink><origin>Hatch, J.R.</origin></citeinfo></srccite><srctime><timeinfo><sngdate><caldate>2004</caldate></sngdate></timeinfo><srccurr>publication date</srccurr></srctime></srcinfo></lineage>
+	</dataqual>
+	<spdoinfo>
+		<direct Sync="TRUE">Vector</direct>
+		<ptvctinf>
+			<sdtsterm Name="app_coal_basins">
+				<sdtstype Sync="TRUE">G-polygon</sdtstype><ptvctcnt Sync="TRUE">3</ptvctcnt></sdtsterm>
+			<esriterm Name="app_coal_basins"><efeatyp Sync="TRUE">Simple</efeatyp><efeageom Sync="TRUE">Polygon</efeageom><esritopo Sync="TRUE">FALSE</esritopo><efeacnt Sync="TRUE">3</efeacnt><spindex Sync="TRUE">FALSE</spindex><linrefer Sync="TRUE">FALSE</linrefer></esriterm></ptvctinf>
+	</spdoinfo>
+	<spref>
+		<horizsys>
+			<geograph>
+				<latres>0.000001</latres>
+				<longres>0.000001</longres>
+				<geogunit Sync="TRUE">Decimal degrees</geogunit>
+			</geograph>
+			<geodetic>
+				<horizdn Sync="TRUE">North American Datum of 1983</horizdn>
+				<ellips Sync="TRUE">Geodetic Reference System 80</ellips>
+				<semiaxis Sync="TRUE">6378137.000000</semiaxis>
+				<denflat Sync="TRUE">298.257222</denflat>
+			</geodetic>
+			<cordsysn><geogcsn Sync="TRUE">GCS_North_American_1983</geogcsn></cordsysn></horizsys>
+	</spref>
+	<eainfo>
+		<detailed Name="app_coal_basins">
+			<enttyp>
+				<enttypl Sync="TRUE">app_coal_basins</enttypl>
+				<enttypd>Northern, central, and southern coal regions in the Appalachian basin of the Eastern United States.</enttypd>
+				<enttypds>USGS</enttypds>
+				<enttypt Sync="TRUE">Feature Class</enttypt><enttypc Sync="TRUE">3</enttypc></enttyp>
+			<attr><attrlabl Sync="TRUE">FID</attrlabl><attalias Sync="TRUE">FID</attalias><attrtype Sync="TRUE">OID</attrtype><attwidth Sync="TRUE">4</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale><attrdef Sync="TRUE">Internal feature number.</attrdef><attrdefs>Esri</attrdefs><attrdomv><udom Sync="TRUE">Sequential unique whole numbers that are automatically generated.</udom></attrdomv></attr><attr><attrlabl Sync="TRUE">Shape</attrlabl><attalias Sync="TRUE">Shape</attalias><attrtype Sync="TRUE">Geometry</attrtype><attwidth Sync="TRUE">0</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale><attrdef Sync="TRUE">Feature geometry.</attrdef><attrdefs>Esri</attrdefs><attrdomv><udom Sync="TRUE">Coordinates defining the features.</udom></attrdomv></attr><attr><attrlabl Sync="TRUE">name</attrlabl><attalias Sync="TRUE">name</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">60</attwidth><attrdef>Name of coal region.</attrdef><attrdefs>USGS</attrdefs><attrdomv><edom><edomv>Northern Appalachian basin coal region</edomv><edomvd>Northern Appalachian basin coal region.</edomvd><edomvds>USGS</edomvds></edom></attrdomv><attrdomv><edom><edomv>Central Appalachian basin coal region</edomv><edomvd>Central Appalachian basin coal region.</edomvd><edomvds>USGS</edomvds></edom></attrdomv><attrdomv><edom><edomv>Southern Appalachian basin coal region</edomv><edomvd>Southern Appalachian basin coal region.</edomvd><edomvds>USGS</edomvds></edom></attrdomv></attr></detailed>
+	</eainfo>
+	<distinfo>
+		<distrib>
+			<cntinfo>
+				<cntorgp>
+					<cntorg>USGS Information Services</cntorg>
+				</cntorgp>
+				<cntaddr>
+					<addrtype>mailing address</addrtype>
+					<address>Box 25286 Denver Federal Center</address>
+					<city>Denver</city>
+					<state>Colorado</state>
+					<postal>80225</postal>
+					<country>United States</country>
+				</cntaddr>
+				<cntvoice>1-888-ASK-USGS</cntvoice>
+				<cntfax>303-202-4693</cntfax>
+				<cntemail>ask@usgs.gov</cntemail>
+			</cntinfo>
+		</distrib>
+		<resdesc>Downloadable Data</resdesc>
+		<distliab>This publication was prepared by an agency of the United States Government. Neither the United States Government nor any agency thereof, nor any of their employees, makes any warranty, expressed or implied, or assumes any legal liability or responsibility for the accuracy, completeness, or usefulness of any information, apparatus, product, or process disclosed in this report, or represents that its use would not infringe privately owned rights. Reference therein to any specific commercial product, process, or service by trade name, trademark, manufacturer, or otherwise does not necessarily constitute or imply its endorsement, recommendation, or favoring by the United States Government or any agency thereof. Although all data and software published are used by the U.S. Geological Survey, no warranty, expressed or implied, is made by the U.S. Geological Survey as to the accuracy of the data and related materials and (or) the functioning of the software. The act of distribution shall not constitute any such warranty, and no responsibility is assumed by the U.S. Geological Survey in the use of these data, software, or related materials.</distliab>
+		<stdorder>
+			<digform>
+				<digtinfo>
+					<formname>Shapefile</formname>
+					<formcont>A shapefile representing the northern, central, and southern coal regions in the Appalachian basin of the Eastern United States.</formcont>
+					<transize Sync="TRUE">0.476</transize></digtinfo>
+				<digtopt>
+					<onlinopt>
+						<computer>
+							<networka>
+								<networkr>http://pubs.usgs.gov/pp/1708/ii/downloads/coal/basin_coal_regions/app_coal_regions.zip</networkr>
+							</networka>
+						</computer>
+					</onlinopt>
+				</digtopt>
+			</digform>
+			<digform>
+				<digtinfo>
+					<formname>Zipped Keyhole Markup Language</formname>
+					<formcont>A Zipped Keyhole Markup Language (KMZ) file representing the northern, central, and southern coal regions in the Appalachian basin of the Eastern United States.</formcont>
+					<transize Sync="TRUE">0.476</transize></digtinfo>
+				<digtopt>
+					<onlinopt>
+						<computer>
+							<networka>
+								<networkr>http://pubs.usgs.gov/pp/1708/ii/downloads/coal/basin_coal_regions/app_coal_regions.kmz</networkr>
+							</networka>
+						</computer>
+					</onlinopt>
+				</digtopt>
+			</digform>
+			<ordering>This product can be downloaded individually using any one of the digital forms from the Network_Resource_Name URLs above. Each of these URLs may provide access to various formats of the same product.  To order the larger work, please use the contact information provided above.
+</ordering>
+			<fees>None</fees></stdorder>
+		<availabl><timeinfo><sngdate><caldate>2014</caldate></sngdate></timeinfo></availabl></distinfo>
+	<metainfo>
+		<metd>2014112114</metd>
+		<metrd>2014112114</metrd>
+		<metc>
+			<cntinfo>
+				<cntaddr>
+					<addrtype>mailing address</addrtype>
+					<address>MS 956, National Center, 12201 Sunrise Valley Drive</address>
+					<city>Reston</city>
+					<state>Virginia</state>
+					<postal>20192</postal>
+					<country>United States</country>
+				</cntaddr>
+				<cntemail>mtrippi@usgs.gov</cntemail>
+				<cntinst>For inquiries regarding this document, please include the metadata contact person's name, dataset name, and publication series and number.</cntinst>
+				<cntperp><cntper>Michael H. Trippi</cntper><cntorg>U.S. Geological Survey</cntorg></cntperp><cntpos>Geologist</cntpos><cntvoice>703-648-4597</cntvoice><cntfax>703-648-6419</cntfax></cntinfo>
+		</metc>
+		<metstdn Sync="TRUE">FGDC Content Standards for Digital Geospatial Metadata</metstdn>
+		<metstdv Sync="TRUE">FGDC-STD-001-1998</metstdv>
+		<langmeta Sync="TRUE">en</langmeta><mettc Sync="TRUE">local time</mettc></metainfo>
+	<Esri><ModDate>20100107</ModDate><ModTime>18021300</ModTime><CreaDate>20090413</CreaDate><CreaTime>13272200</CreaTime><SyncOnce>FALSE</SyncOnce><SyncDate>20100107</SyncDate><SyncTime>18021300</SyncTime><MetaID>{68CB7353-917C-43CA-9DFC-D4D67B9145B0}</MetaID><PublishedDocID>{9EE4DD07-3DFF-491B-BDE2-099075222455}</PublishedDocID><PublishStatus>Published</PublishStatus></Esri><mdDateSt Sync="TRUE">20100107</mdDateSt><distInfo><distributor><distorTran><onLineSrc><linkage Sync="TRUE">file://\\IGSAAAHMWSG632\C\Documents and Settings\mtrippi\My Documents\GISStuff\AppalachianFramework\Maps\Multi-StateMaps\ProfPaper 1708 DVD Chapter I\spatial\coal\basin\shape\app_coal_basins.shp</linkage><protocol Sync="TRUE">Local Area Network</protocol><orDesc Sync="TRUE">002</orDesc></onLineSrc><transSize Sync="TRUE">0.476</transSize></distorTran><distorFormat><formatName Sync="TRUE">Shapefile</formatName></distorFormat></distributor></distInfo><dataIdInfo><envirDesc Sync="TRUE">Microsoft Windows XP Version 5.1 (Build 2600) Service Pack 2; ESRI ArcCatalog 9.3.1.3000</envirDesc><dataLang><languageCode Sync="TRUE" value="en"></languageCode></dataLang><idCitation><resTitle Sync="TRUE">app_coal_basins</resTitle><presForm><PresFormCd Sync="TRUE" value="005"></PresFormCd></presForm></idCitation><spatRpType><SpatRepTypCd Sync="TRUE" value="001"></SpatRepTypCd></spatRpType><dataExt><geoEle><GeoBndBox esriExtentType="native"><westBL Sync="TRUE">-88.098358</westBL><eastBL Sync="TRUE">-76.929794</eastBL><northBL Sync="TRUE">42.019215</northBL><southBL Sync="TRUE">32.840576</southBL><exTypeCode Sync="TRUE">1</exTypeCode></GeoBndBox></geoEle></dataExt><geoBox esriExtentType="decdegrees"><westBL Sync="TRUE">-88.098358</westBL><eastBL Sync="TRUE">-76.929794</eastBL><northBL Sync="TRUE">42.019215</northBL><southBL Sync="TRUE">32.840576</southBL><exTypeCode Sync="TRUE">1</exTypeCode></geoBox></dataIdInfo><mdLang><languageCode Sync="TRUE" value="en"></languageCode></mdLang><mdStanName Sync="TRUE">ISO 19115 Geographic Information - Metadata</mdStanName><mdStanVer Sync="TRUE">DIS_ESRI1.0</mdStanVer><mdChar><CharSetCd Sync="TRUE" value="004"></CharSetCd></mdChar><mdHrLv><ScopeCd Sync="TRUE" value="005"></ScopeCd></mdHrLv><mdHrLvName Sync="TRUE">dataset</mdHrLvName><refSysInfo><RefSystem><refSysID><identCode Sync="TRUE">GCS_North_American_1983</identCode></refSysID></RefSystem></refSysInfo><spatRepInfo><VectSpatRep><topLvl><TopoLevCd Sync="TRUE" value="001"></TopoLevCd></topLvl><geometObjs Name="app_coal_basins"><geoObjTyp><GeoObjTypCd Sync="TRUE" value="001"></GeoObjTypCd></geoObjTyp><geoObjCnt Sync="TRUE">3</geoObjCnt></geometObjs></VectSpatRep></spatRepInfo><mdFileID Sync="TRUE">{9EE4DD07-3DFF-491B-BDE2-099075222455}</mdFileID></metadata>
